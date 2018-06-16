@@ -1,0 +1,33 @@
+import discord
+
+TOKEN = secreto.seu_token()
+client = discord.Client()
+
+COR =0x01A9DB
+mensagem_id = None
+mensagem_user = None
+
+
+
+@client.event
+async def on_ready():
+    print('DIMY BOT ONLINE - Ola Mundo!')
+    print(client.user.name)
+    print(client.user.id)
+    print('------DIMY------')
+    script = "Use o d!ajuda  Online em " + str(len(client.servers)) + " servidor " + str(len(set(client.get_all_members()))) + " usuários."
+    await client.change_presence(game=discord.Game(name=script, type=1))
+    
+    
+@client.event
+async def on_message(message, cargos=None):
+
+    if message.content.lower().startswith('d!ping'):
+        ping = os.popen('ping 157.240.12.35 -n 1')
+        result = ping.readlines()
+        msLine = result[-1].strip()
+        texto = msLine[28:].replace("M¡nimo = ", "").replace(" ximo = ", " ").replace(" Max ", "").replace(" M‚dia = ",
+                                                                                                           " ").replace(
+            ",", " ").replace(" ", "").replace("ms", "") + "ms"
+        embed = discord.Embed(description=":small_blue_diamond: Seu ping e : " + texto, color=0x0080FF)
+        await client.send_message(message.channel, embed=embed)
